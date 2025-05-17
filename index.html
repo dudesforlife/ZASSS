@@ -28,6 +28,38 @@
       60% {text-shadow: -2px 2px #14b8a6;}
       80% {text-shadow: 0px 0px #14b8a6;}
     }
+.glitch-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  color: #14b8a6;
+  text-align: center;
+  animation: glitchTitle 2s infinite;
+  margin-bottom: 10px;
+}
+
+.glitch-subtitle {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: #14b8a6;
+  text-align: center;
+  animation: glitchSubtitle 1s infinite;
+  margin-bottom: 30px;
+}
+
+@keyframes glitchTitle {
+  0%, 100% {text-shadow: 3px 2px #14b8a6;}
+  25% {text-shadow: -2px 2px #14b8a6;}
+  50% {text-shadow: 3px -3px #14b8a6;}
+  75% {text-shadow: -3px -2px #14b8a6;}
+}
+
+@keyframes glitchSubtitle {
+  0%, 100% {text-shadow: 2px 2px #14b8a6;}
+  20% {text-shadow: -2px -2px #14b8a6;}
+  40% {text-shadow: 2px -2px #14b8a6;}
+  60% {text-shadow: -2px 2px #14b8a6;}
+  80% {text-shadow: 0px 0px #14b8a6;}
+}
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -147,10 +179,10 @@
 
 <!-- ====================== SECTION 1 ====================== -->
 <div class="container" id="mainForm">
-  <h1>ZASSS - Guilt Bomb</h1>
+  <h1 class="glitch-title">ZASSS - Guilt Bomb</h1>
 
   <!-- === ANIMATED HEADER EFFECT === -->
-  <div class="animated-header">Anonymous | Confession | Therapy</div>
+  <div class="glitch-subtitle">Anonymous | Confession | Therapy</div>
 
   <p class="description">Luahkan perasaan anda pada seseorang secara rahsia. Tiada siapa akan tahu anda pengirimnya.</p>
   <p class="description">Hantar ke WhatsApp penerima secara anonymous</p>
