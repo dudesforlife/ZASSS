@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Processing Payment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #14b8a6;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #f1f1f1;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+    }
+
+    .whatsapp-icon {
+      font-size: 90px;
+      animation: pulse 1s infinite;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      font-size: 16px;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>
+    Please do not close or refresh this page. Your payment confirmation is currently being processed.
+    Closing or refreshing the page may result in a failed transaction.
+  </h2>
+
+  <div class="whatsapp-icon">  
+    &#128241; <!-- Emoji phone icon -->
+  </div>
+
+  <p class="countdown">Completing in <span id="timer">5</span> seconds...</p>
+
+  <script>
+    let seconds = 5;
+    const countdown = document.getElementById("timer");
+    const interval = setInterval(() => {
+      seconds--;
+      countdown.innerText = seconds;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        window.location.href = "thankyou.html"; // Ubah ke failed.html jika perlu
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
