@@ -1,16 +1,74 @@
-
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Terima Kasih</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: radial-gradient(circle at center, #000428, #004e92);
+      color: #f1f1f1;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .thankyou-box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+    }
+
+    .countdown {
+      font-size: 22px;
+      color: #14b8a6;
+      margin-bottom: 10px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .note {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Terima Kasih!</h1>
-    <p class="subtitle">Mesej anda telah dihantar secara anonymous ke penerima.</p>
-  </div>
+
+<div class="countdown">Redirecting in <span id="timer">5</span> seconds...</div>
+<div class="note">Do not close or refresh. Redirecting to ZASSS!</div>
+
+<div class="thankyou-box">
+  <h2>Terima Kasih!</h2>
+  <p>Mesej anda telah dihantar secara anonymous ke penerima.</p>
+</div>
+
+<script>
+  let timeLeft = 5;
+  const timerElement = document.getElementById("timer");
+
+  const countdown = setInterval(() => {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      window.location.href = "https://zasss.realbeautyarby.com.my";
+    }
+  }, 1000);
+</script>
+
 </body>
 </html>
