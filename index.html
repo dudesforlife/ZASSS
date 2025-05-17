@@ -14,6 +14,7 @@
       background-size: 400% 400%;
       animation: gradient 12s ease infinite;
       color: #f1f1f1;
+      overflow-x: hidden;
     }
     @keyframes gradient {
       0% {background-position: 0% 50%;}
@@ -43,6 +44,20 @@
         opacity: 1;
       }
     }
+    @keyframes blurFade {
+      0% {
+        filter: blur(0px);
+        opacity: 1;
+      }
+      50% {
+        filter: blur(8px);
+        opacity: 0.7;
+      }
+      100% {
+        filter: blur(0px);
+        opacity: 0;
+      }
+    }
     .container {
       max-width: 600px;
       margin: 80px auto;
@@ -52,6 +67,8 @@
       border-radius: 12px;
       box-shadow: 0 0 40px rgba(20, 184, 166, 0.3);
       animation: fadeIn 1s ease-in-out;
+      position: relative;
+      z-index: 2;
     }
     .reveal {
       position: fixed;
@@ -59,11 +76,20 @@
       left: 50%;
       width: 0;
       height: 0;
-      background-color: #14b8a6;
+      background: radial-gradient(circle, #14b8a6 0%, #0f0f0f 100%);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      z-index: 999;
+      z-index: 10;
       animation: reveal 1s forwards;
+    }
+    .blur-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 9;
+      animation: blurFade 1.5s forwards;
     }
     label, input[type="text"], textarea, input[type="submit"], button {
       display: block;
@@ -99,6 +125,19 @@
       display: none;
       animation: fadeIn 1s ease-in-out;
     }
+
+    /* === ANIMATED HEADER EFFECT === */
+    .animated-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 30px auto 20px;
+      animation: glitch 1s infinite;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      color: #14b8a6;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -107,10 +146,12 @@
 </audio>
 
 <!-- ====================== SECTION 1 ====================== -->
-<!-- Bahagian user isi mesej, nama penerima & nombor WhatsApp -->
-
 <div class="container" id="mainForm">
   <h1>ZASSS - Guilt Bomb</h1>
+
+  <!-- === ANIMATED HEADER EFFECT === -->
+  <div class="animated-header">Anonymous | Confession | Therapy</div>
+
   <p class="description">Luahkan perasaan anda pada seseorang secara rahsia. Tiada siapa akan tahu anda pengirimnya.</p>
   <p class="description">Hantar ke WhatsApp penerima secara anonymous</p>
 
@@ -127,8 +168,6 @@
 </div>
 
 <!-- ====================== SECTION 2 ====================== -->
-<!-- Bahagian info billing pengguna untuk pembayaran -->
-
 <div class="container" id="billingForm">
   <h1>Info Bil</h1>
   <p class="description">Info billing diperlukan untuk tujuan pembayaran dan pengesahan bagi menghantar mesej anonymous kamu.</p>
@@ -156,6 +195,10 @@
     const phone = document.getElementById('phone').value.trim();
 
     if (message && name && phone) {
+      const blur = document.createElement('div');
+      blur.classList.add('blur-overlay');
+      document.body.appendChild(blur);
+
       const revealDiv = document.createElement('div');
       revealDiv.classList.add('reveal');
       document.body.appendChild(revealDiv);
@@ -163,7 +206,9 @@
       setTimeout(() => {
         document.getElementById('mainForm').style.display = 'none';
         document.getElementById('billingForm').style.display = 'block';
-      }, 1000);
+        document.body.removeChild(revealDiv);
+        document.body.removeChild(blur);
+      }, 1300);
     } else {
       alert("Sila isi semua maklumat terlebih dahulu.");
     }
