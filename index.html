@@ -21,12 +21,27 @@
       100% {background-position: 0% 50%;}
     }
     @keyframes glitch {
-      0% {text-shadow: 2px 2px #14b8a6;}
+      0%, 100% {text-shadow: 2px 2px #14b8a6;}
       20% {text-shadow: -2px -2px #14b8a6;}
       40% {text-shadow: 2px -2px #14b8a6;}
       60% {text-shadow: -2px 2px #14b8a6;}
       80% {text-shadow: 0px 0px #14b8a6;}
-      100% {text-shadow: 2px 2px #14b8a6;}
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes reveal {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      100% {
+        width: 3000px;
+        height: 3000px;
+        opacity: 1;
+      }
     }
     .container {
       max-width: 600px;
@@ -38,40 +53,32 @@
       box-shadow: 0 0 40px rgba(20, 184, 166, 0.3);
       animation: fadeIn 1s ease-in-out;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .reveal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background-color: #14b8a6;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      animation: reveal 1s forwards;
     }
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 28px;
-      text-align: center;
-      color: #14b8a6;
-      animation: glitch 2.5s infinite;
-    }
-    p.description {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-    label {
+    label, input[type="text"], textarea, input[type="submit"], button {
       display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #ccc;
-    }
-    input[type="text"], textarea {
       width: 100%;
-      padding: 12px;
       margin-bottom: 20px;
+    }
+    textarea, input[type="text"] {
+      padding: 12px;
       background-color: #2b2b2b;
       border: 1px solid #444;
       border-radius: 6px;
       color: #eee;
       font-size: 14px;
     }
-    input[type="submit"] {
-      width: 100%;
+    button, input[type="submit"] {
       padding: 14px;
       font-size: 16px;
       background-color: #14b8a6;
@@ -80,11 +87,7 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    input[type="submit"]:hover {
-      background-color: #0aa69e;
-      box-shadow: 0 0 10px #14b8a6, 0 0 20px #14b8a6;
+      transition: 0.3s ease;
     }
     .footer {
       text-align: center;
@@ -92,34 +95,80 @@
       font-size: 13px;
       color: #777;
     }
+    #billingForm {
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
   </style>
 </head>
 <body>
-  <!-- Ambient sound -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_f62a4bbd63.mp3" type="audio/mpeg">
-  </audio>
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_f62a4bbd63.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="container">
-    <h1>ZASSS - Guilt Bomb</h1>
-    <p class="description">Luahkan perasaan anda pada seseorang secara rahsia. Tiada siapa akan tahu anda pengirimnya.</p>
-    <p class="description">Hantar ke WhatsApp penerima secara anonymous</p>
+<!-- ====================== SECTION 1 ====================== -->
+<!-- Bahagian user isi mesej, nama penerima & nombor WhatsApp -->
 
-    <!-- Hantar POST ke create_bill.php -->
-    <form method="POST" action="https://zasss.realbeautyarby.com.my/create_bill.php">
-      <label for="message">Mesej anda</label>
-      <textarea id="message" name="message" placeholder="Contoh: Saya minta maaf atas semua yang berlaku…&#10;Contoh: Saya dah lama suka awak…&#10;Contoh: Happy birthday crush…" rows="7" style="font-size: 16px;" required></textarea>
+<div class="container" id="mainForm">
+  <h1>ZASSS - Guilt Bomb</h1>
+  <p class="description">Luahkan perasaan anda pada seseorang secara rahsia. Tiada siapa akan tahu anda pengirimnya.</p>
+  <p class="description">Hantar ke WhatsApp penerima secara anonymous</p>
 
-      <label for="recipientName">Nama Penerima</label>
-      <input type="text" id="recipientName" name="recipientName" placeholder="Contoh: Aina" required>
+  <label for="message">Mesej anda</label>
+  <textarea id="message" name="message" rows="6" required></textarea>
 
-      <label for="phone">Nombor WhatsApp penerima</label>
-      <input type="text" id="phone" name="phone" placeholder="Contoh: 0123456789" required>
+  <label for="recipientName">Nama Penerima</label>
+  <input type="text" id="recipientName" name="recipientName" required>
 
-      <input type="submit" value="Hantar Mesej Anonymous">
-    </form>
+  <label for="phone">Nombor WhatsApp penerima</label>
+  <input type="text" id="phone" name="phone" required>
 
-    <div class="footer">ZASSS ©️ 2025 – Anonymous Guilt Delivery System - By Amanz</div>
-  </div>
+  <button onclick="triggerAnimation()">Hantar Mesej Anonymous</button>
+</div>
+
+<!-- ====================== SECTION 2 ====================== -->
+<!-- Bahagian info billing pengguna untuk pembayaran -->
+
+<div class="container" id="billingForm">
+  <h1>Info Bil</h1>
+  <p class="description">Info billing diperlukan untuk tujuan pembayaran dan pengesahan bagi menghantar mesej anonymous kamu.</p>
+
+  <form method="POST" action="https://zasss.realbeautyarby.com.my/create_bill.php">
+    <label for="payerName">Nama Anda</label>
+    <input type="text" id="payerName" name="payerName" required>
+
+    <label for="payerPhone">Nombor Telefon</label>
+    <input type="text" id="payerPhone" name="payerPhone" required>
+
+    <label for="payerEmail">Email</label>
+    <input type="text" id="payerEmail" name="payerEmail" required>
+
+    <input type="submit" value="Confirm & Proceed to Pay">
+  </form>
+</div>
+
+<div class="footer">ZASSS ©️ 2025 – Anonymous Guilt Delivery System - By Amanz</div>
+
+<script>
+  function triggerAnimation() {
+    const message = document.getElementById('message').value.trim();
+    const name = document.getElementById('recipientName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    if (message && name && phone) {
+      const revealDiv = document.createElement('div');
+      revealDiv.classList.add('reveal');
+      document.body.appendChild(revealDiv);
+
+      setTimeout(() => {
+        document.getElementById('mainForm').style.display = 'none';
+        document.getElementById('billingForm').style.display = 'block';
+      }, 1000);
+    } else {
+      alert("Sila isi semua maklumat terlebih dahulu.");
+    }
+  }
+</script>
+
 </body>
 </html>
