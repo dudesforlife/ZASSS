@@ -55,36 +55,24 @@
   </p>
 
   <script>
-    fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
-      .then(res => res.text())
-      .then(status => {
-        console.log("Status dari backend:", status); // Debug console
-        alert("Backend status = " + status); // Debug popup
+    fetch("https://zasss.realbeautyarby.com.my/status.php")
+  .then(res => res.text())
+  .then(status => {
+    console.log("Status dari backend:", status); 
+    alert("Backend status = " + status); 
 
-        if (status.trim() === "1") {
-          let seconds = 5;
-          const countdown = document.getElementById("timer");
-          countdown.innerText = seconds;
-
-          const interval = setInterval(() => {
-            seconds--;
-            countdown.innerText = seconds;
-
-            if (seconds <= 0) {
-              clearInterval(interval);
-              window.location.href = "thankyou.html";
-            }
-          }, 1000);
-
-        } else {
-          window.location.href = "failed.html";
-        }
-      })
-      .catch((err) => {
-        console.error("Gagal fetch status_ok.txt:", err);
-        alert("Gagal baca status bayaran.");
-        window.location.href = "failed.html";
-      });
+    if (status.trim() === "1") {
+      // Success
+      window.location.href = "thankyou.html";
+    } else {
+      window.location.href = "failed.html";
+    }
+  })
+  .catch((err) => {
+    console.error("Gagal fetch status:", err);
+    alert("Gagal baca status bayaran.");
+    window.location.href = "failed.html";
+  });
   </script>
 
 </body>
