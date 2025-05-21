@@ -48,23 +48,38 @@
     Closing or refreshing the page may result in a failed transaction.
   </h2>
 
-  <div class="whatsapp-icon">  
-    &#128241; <!-- Emoji phone icon -->
-  </div>
+  <div class="whatsapp-icon">&#128241;</div>
 
-  <p class="countdown">Completing in <span id="timer">5</span> seconds...</p>
+  <p class="countdown">
+    Completing in <span id="timer">5</span> seconds...
+  </p>
 
   <script>
-    let seconds = 5;
-    const countdown = document.getElementById("timer");
-    const interval = setInterval(() => {
-      seconds--;
-      countdown.innerText = seconds;
-      if (seconds <= 0) {
-        clearInterval(interval);
-        window.location.href = "thankyou.html"; // Ubah ke failed.html jika perlu
-      }
-    }, 1000);
+    fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
+      .then(res => res.text())
+      .then(status => {
+        if (status.trim() === "1") {
+          let seconds = 5;
+          const countdown = document.getElementById("timer");
+          countdown.innerText = seconds;
+
+          const interval = setInterval(() => {
+            seconds--;
+            countdown.innerText = seconds;
+
+            if (seconds <= 0) {
+              clearInterval(interval);
+              window.location.href = "thankyou.html";
+            }
+          }, 1000);
+
+        } else {
+          window.location.href = "failed.html";
+        }
+      })
+      .catch(() => {
+        window.location.href = "failed.html";
+      });
   </script>
 
 </body>
