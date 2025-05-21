@@ -13,7 +13,6 @@
       text-align: center;
       padding: 60px 20px;
     }
-
     h2 {
       font-size: 18px;
       color: #f1f1f1;
@@ -21,19 +20,16 @@
       margin: 0 auto 40px;
       line-height: 1.5;
     }
-
     .whatsapp-icon {
       font-size: 90px;
       animation: pulse 1s infinite;
       margin-bottom: 20px;
     }
-
     .countdown {
       font-size: 16px;
       color: #aaa;
       margin-top: 10px;
     }
-
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.1); opacity: 0.7; }
@@ -50,29 +46,37 @@
 
   <div class="whatsapp-icon">&#128241;</div>
 
-  <p class="countdown">
-    Completing in <span id="timer">5</span> seconds...
-  </p>
+  <p class="countdown">Completing in <span id="timer">5</span> seconds...</p>
 
   <script>
     fetch("https://zasss.realbeautyarby.com.my/status.php")
-  .then(res => res.text())
-  .then(status => {
-    console.log("Status dari backend:", status); 
-    alert("Backend status = " + status); 
+      .then(res => res.text())
+      .then(status => {
+        console.log("Status dari backend:", status);
+        alert("Backend status = " + status); // debug
 
-    if (status.trim() === "1") {
-      // Success
-      window.location.href = "thankyou.html";
-    } else {
-      window.location.href = "failed.html";
-    }
-  })
-  .catch((err) => {
-    console.error("Gagal fetch status:", err);
-    alert("Gagal baca status bayaran.");
-    window.location.href = "failed.html";
-  });
+        if (status.trim() === "1") {
+          let seconds = 5;
+          const countdown = document.getElementById("timer");
+          countdown.innerText = seconds;
+
+          const interval = setInterval(() => {
+            seconds--;
+            countdown.innerText = seconds;
+            if (seconds <= 0) {
+              clearInterval(interval);
+              window.location.href = "thankyou.html";
+            }
+          }, 1000);
+        } else {
+          window.location.href = "failed.html";
+        }
+      })
+      .catch((err) => {
+        console.error("Fetch status gagal:", err);
+        alert("Gagal baca status bayaran.");
+        window.location.href = "failed.html";
+      });
   </script>
 
 </body>
