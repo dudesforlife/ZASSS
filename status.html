@@ -59,7 +59,7 @@
       .then(res => res.text())
       .then(status => {
         if (status.trim() === "1") {
-          let seconds = 5;
+          let seconds = 15;
           const countdown = document.getElementById("timer");
           countdown.innerText = seconds;
 
