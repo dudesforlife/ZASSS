@@ -47,7 +47,21 @@
     Please do not close or refresh this page. Your payment confirmation is currently being processed.
     Closing or refreshing the page may result in a failed transaction.
   </h2>
-
+<script>
+fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
+  .then(res => res.text())
+  .then(status => {
+    console.log("Status dari backend:", status); // Debug log
+    if (status.trim() === "1") {
+      window.location.href = "thankyou.html";
+    } else {
+      window.location.href = "failed.html";
+    }
+  })
+  .catch(() => {
+    window.location.href = "failed.html";
+  });
+</script>
   <div class="whatsapp-icon">&#128241;</div>
 
   <p class="countdown">
