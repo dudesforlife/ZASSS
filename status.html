@@ -47,21 +47,7 @@
     Please do not close or refresh this page. Your payment confirmation is currently being processed.
     Closing or refreshing the page may result in a failed transaction.
   </h2>
-<script>
-fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
-  .then(res => res.text())
-  .then(status => {
-    console.log("Status dari backend:", status); // Debug log
-    if (status.trim() === "1") {
-      window.location.href = "thankyou.html";
-    } else {
-      window.location.href = "failed.html";
-    }
-  })
-  .catch(() => {
-    window.location.href = "failed.html";
-  });
-</script>
+
   <div class="whatsapp-icon">&#128241;</div>
 
   <p class="countdown">
@@ -72,8 +58,11 @@ fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
     fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
       .then(res => res.text())
       .then(status => {
+        console.log("Status dari backend:", status); // Debug console
+        alert("Backend status = " + status); // Debug popup
+
         if (status.trim() === "1") {
-          let seconds = 15;
+          let seconds = 5;
           const countdown = document.getElementById("timer");
           countdown.innerText = seconds;
 
@@ -91,7 +80,9 @@ fetch("https://zasss.realbeautyarby.com.my/status_ok.txt")
           window.location.href = "failed.html";
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Gagal fetch status_ok.txt:", err);
+        alert("Gagal baca status bayaran.");
         window.location.href = "failed.html";
       });
   </script>
